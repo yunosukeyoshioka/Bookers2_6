@@ -1,0 +1,94 @@
+<body>
+	<header>
+		<title>Bookers</title>
+	</header>
+	
+	 <div class="body">
+	<!--プロフィール画面-->
+		<div class="container">
+			<div class="row">
+				<div class="profiles col-xs-3">
+					<h2 class="profile-name">User info</h2>
+						  	<!--画像表示部分-->  
+				  <p class="picture"><%= attachment_image_tag @user, :profile_image, format: 'jpeg', size: "100x100", class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %></p>	  
+					  <div class="name">	
+							<p>name</p>
+							<p><%= @user.name %></p>
+					  </div>	
+					  <div class="introduction">
+							<p>Introduction</p>	
+							<p><%= @user.introduction %></p>
+					  </div>	
+			  <!--プロフィール編集画面リンク-->
+					<% if @user.id == current_user.id %>
+						<%= link_to edit_user_path(@user) do %>
+							<i class="col-xs-12 btn btn-default glyphicon glyphicon-wrench"></i>
+						<% end %>
+					<% else %>
+						<%= link_to user_path(current_user) do %>
+							<i class="col-xs-12 btn btn-default glyphicon glyphicon-wrench"></i>
+						<% end %>	
+					<% end %>
+	<!--ここまで-->
+	<!--投稿画面-->
+				<h2>New book</h2>
+				<!-- form_for部分 -->
+				<%= form_for(@book) do |f| %>
+					<div class="field">
+						<h4>Title</h4>
+				<%= f.text_field :title %>
+					</div>
+					<div class="field">
+						<h4>Opinion</h4>
+				<%= f.text_area :body %>
+					</div>
+				<br class="create"><%= f.submit 'Create Book' %></br>
+				<% end %>
+			</div>
+<!--ここまで-->
+<!--本一覧画面-->
+				<div class="Books col-xs-9">
+					<h2 class="Users">Books</h2>
+					<table>
+						<thead>
+							<tr>
+								<th class="title">Title</th>
+								<th class="opinion">Opinion</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!--本の一覧表示-->
+							<% @books.each do |book| %>
+								<tr class="book-information"> 			
+									
+									<td><%= attachment_image_tag book.user, :profile_image, format: 'jpeg', size: "40x40", class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %></td>
+									<td><%=link_to book.title, book_path(book) %></td>　　　
+									<td><%= book.body %></td>
+									<!--いいね-->
+									<% if book.favorited_by?(current_user) %>
+							      <td><%= link_to book_favorites_path(book), method: :delete do %>
+									        <i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
+									        <%= book.favorites.count %>
+									      <% end %>
+									  </td>    
+								  <% else %>
+										<td>
+												<%= link_to book_favorites_path(book), method: :post do %>
+													<i class= "fa fa-heart" aria-hidden="true"></i>
+											    <%= book.favorites.count %>
+										    <% end %>
+										</td>    
+									<% end %>	  									  
+									<!--コメント-->
+									 <td>コメント数: <%= book.post_comments.count %></td>
+						 		</tr> 
+							<% end %>
+
+						</tbody> 
+					</table>
+				</div>
+			<!--ここまで-->
+			</div>
+		</div>
+	</div>
+</body>
