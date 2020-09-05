@@ -11,6 +11,8 @@
 					<h2 class="profile-name">User info</h2>
 						  	<!--画像表示部分-->  
 				  <p class="picture"><%= attachment_image_tag @user, :profile_image, format: 'jpeg', size: "100x100", class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %></p>	  
+					  
+
 					  <div class="name">	
 							<p>name</p>
 							<p><%= @user.name %></p>
@@ -19,7 +21,22 @@
 							<p>Introduction</p>	
 							<p><%= @user.introduction %></p>
 					  </div>	
-			  <!--プロフィール編集画面リンク-->
+			 			<div class="follow">
+							<% "id: #{@user.id}" %>
+							<%= link_to  user_followed_path(@user) do %>
+								<p><%= "follow: #{@user.follower.count}" %></p>
+							<% end %>	
+							<%= link_to  user_follower_path(@user) do %>
+								<p><%= "follower: #{@user.followed.count}" %></p>
+							<% end %>	
+						</div>		
+							<% unless @user == current_user %>
+							  <% if current_user.following?(@user) %>
+							    <%= link_to 'フォロー外す', unfollow_path(@user.id), class: 'btn btn-success', method: :POST %>
+							  <% else %>
+							    <%= link_to 'フォローする', follow_path(@user.id),class: 'btn btn-primary', method: :POST %>
+							  <% end %>
+							<% end %>
 					<% if @user.id == current_user.id %>
 						<%= link_to edit_user_path(@user) do %>
 							<i class="col-xs-12 btn btn-default glyphicon glyphicon-wrench"></i>
@@ -29,6 +46,9 @@
 							<i class="col-xs-12 btn btn-default glyphicon glyphicon-wrench"></i>
 						<% end %>	
 					<% end %>
+
+
+
 	<!--ここまで-->
 	<!--投稿画面-->
 				<h2>New book</h2>
