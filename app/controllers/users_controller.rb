@@ -15,15 +15,11 @@ before_action :authenticate_user!
 		@books = @user.books
 	end	
 
-
-
   def create
     @user = User.create(user_params)
     @user.save
   	redirect_to user_path(@user.id)
   end
-
-
 
   def edit
     if params[:id].to_i == current_user.id

@@ -7,104 +7,94 @@
 	</header>
 	
 	<!--エラーメッセージ-->
-				<% if @book.errors.any? %>
-				  <div id="error_explanation" class="alert alert-danger">
-				  	 <h3><%= pluralize(@book.errors.count, "error") %> prohibited this product from being saved:</h3>
-				    <ul>
-				      <% @book.errors.full_messages.each do |message| %>
-				        <li><%= message %></li>
-				      <% end %>
-				    </ul>
-				  </div>
-				<% end %>
+	<% if @book.errors.any? %>
+			<div id="error_explanation" class="alert alert-danger">
+				 <h3><%= pluralize(@book.errors.count, "error") %> prohibited this product from being saved:</h3>
+				 <ul>
+				   <% @book.errors.full_messages.each do |message| %>
+				    <li><%= message %></li>
+				   <% end %>
+				  </ul>
+			</div>
+	<% end %>
 				<!--ここまで-->
-	
-
-
-
-	 <div class="body">
+	<div class="body">
 	<!--プロフィール画面-->
-			<div class="container">
-				<div class="row">
+		<div class="container">
+			<div class="row">
 					<!--User info-->
-					<div class="profiles col-xs-3">
-				  	<h2 class="profile-name">User info</h2> 
-					  <p class="image"><%= attachment_image_tag @user, :profile_image, format: 'jpeg', size: "100x100", class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %></p>  
-						  <div class="name">
-								<p>name</p>
-								<p><%= @user.name %></p>
-						  </div>	
-						  <div class="introduction">
-								<p>Introduction</p>	
-								<p><%= @user.introduction %></p>
-						  </div>			
-							<%= link_to user_path(@user) do %>
-								<i class="col-xs-12 btn btn-default glyphicon glyphicon-wrench"></i>
-							<% end %>	
+				<div class="profiles col-xs-3">
+				  <h2 class="profile-name">User info</h2> 
+				 	<p class="image"><%= attachment_image_tag @user, :profile_image, format: 'jpeg', size: "100x100", class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %></p>  
+					<div class="name">
+						<p>name</p>
+						<p><%= @user.name %></p>
+					</div>	
+					<div class="introduction">
+						<p>Introduction</p>	
+						<p><%= @user.introduction %></p>
+					</div>			
+						<%= link_to user_path(@user) do %>
+							<i class="col-xs-12 btn btn-default glyphicon glyphicon-wrench"></i>
+						<% end %>	
 					<!--User info-->
 
 				<!--投稿画面-->
-						<h2>New book</h2>
-						<%= form_for(@book) do |f| %>
+					<h2>New book</h2>
+					<%= form_for(@book) do |f| %>
+						<div class="field">
+							<h4>Title</h4>
+							<%= f.text_field :title %>
+						</div>
 							<div class="field">
-								<h4>Title</h4>
-						<%= f.text_field :title %>
-							</div>
-							<div class="field">
-								<h4>Opinion</h4>
+							<h4>Opinion</h4>
 						<%= f.text_area :body %>
 							</div>
-							<br class="create"><%= f.submit 'Create Book' %></br>
-						<% end %>
+						<br class="create"><%= f.submit 'Create Book' %></br>
+					<% end %>
 				</div>
 				<!--col-xs-3ここまで-->
 
-					<div class="Books col-xs-9">
-						<h2 class="Books">Books</h2>
-						<table>
-							<thead>
-								<tr>
-									<th class="title">Title</th>
-									<th class="opinion">Opinion</th>
-								</tr>
-							</thead>
-							<tbody>	
-								<% @books.each do |book| %>
-									<tr> 
-										<td><%= link_to user_path(book.user) do %>
-											<%= attachment_image_tag book.user, :profile_image, format: 'jpeg', size: "40x40", class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %></td>
-											<% end %>
-										<td><%=link_to book.title, book_path(book) %></td> 				
-										<td><%= book.body %></td>		
-
-
-
+				<div class="Books col-xs-9">
+					<h2 class="Books">Books</h2>
+					<table>
+					<thead>
+						<tr>
+							<th class="title">Title</th>
+							<th class="opinion">Opinion</th>
+						</tr>
+					</thead>
+					<tbody>	
+						<% @books.each do |book| %>
+						<tr> 
+							<td><%= link_to user_path(book.user) do %>
+									<%= attachment_image_tag book.user, :profile_image, format: 'jpeg', size: "40x40", class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %></td>
+									<% end %>
+							<td><%=link_to book.title, book_path(book) %></td> 				
+							<td><%= book.body %></td>		
 											<!--いいね-->
-									<% if book.favorited_by?(current_user) %>
-							      <td><%= link_to book_favorites_path(book), method: :delete do %>
-									        <i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
-									        <%= book.favorites.count %>
-									      <% end %>
-									  </td>    
-								  <% else %>
-										<td>
-												<%= link_to book_favorites_path(book), method: :post do %>
-													<i class= "fa fa-heart" aria-hidden="true"></i>
-											    <%= book.favorites.count %>
-										    <% end %>
-										</td>    
-									<% end %>	  						
-
-
-
-										<td>コメント数: <%= book.post_comments.count %></td>											
-									</tr>  
+							<% if book.favorited_by?(current_user) %>
+								<td><%= link_to book_favorites_path(book), method: :delete do %>
+									<i class="fa fa-heart" aria-hidden="true" style="color: red;"></i>
+										<%= book.favorites.count %>
+										<% end %>
+								</td>    
+							<% else %>
+								<td>
+									<%= link_to book_favorites_path(book), method: :post do %>
+										<i class= "fa fa-heart" aria-hidden="true"></i>
+										<%= book.favorites.count %>
 								<% end %>
-							</tbody> 		  
-						</table>
-					</div>
-					<!--ここまで-->	
-					</div>
-				</div>
+									</td>    
+							<% end %>	  						
+							<td>コメント数: <%= book.post_comments.count %></td>											
+						</tr>  
+						<% end %>
+					</tbody> 		  
+				</table>
 			</div>
-		</body>
+							<!--ここまで-->	
+			</div>
+		</div>
+	</div>
+</body>

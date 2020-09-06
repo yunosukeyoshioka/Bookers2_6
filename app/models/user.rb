@@ -32,6 +32,25 @@ class User < ApplicationRecord
     following_user.include?(user)
   end 
 
+
+
+  def self.search(method,search)
+    if method == "forward_match"
+      User.where("name LIKE ?", "#{search}%")
+    elsif method == "backward_match"
+      User.where("name LIKE ?", "%#{search}") 
+    elsif method == "parfect_match"
+      User.where(name: search)
+    elsif method == "partial_match" 
+      User.where("name LIKE ?", "%#{search}%")  
+    end
+  end
+
+
+
+
+
+
   #sing up入力画面でIntroduction can't be blankのエラーが
   validates :name, presence: true, length: { in: 2..20 }  
   validates :introduction, length: { maximum: 50 } 

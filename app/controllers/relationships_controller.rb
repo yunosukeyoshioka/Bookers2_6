@@ -18,8 +18,5 @@ class RelationshipsController < ApplicationController
 	def followed
 		@user = User.find(params[:user_id])
 	end	
-
-
-
 	
 end

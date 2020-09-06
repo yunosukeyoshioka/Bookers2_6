@@ -1,0 +1,52 @@
+<div class="body">
+ 	<div class="container">
+ 		<div class="row">
+ 			
+	<% if @model == 'Book' %>
+		<div class="Books col-xs-12">
+			<h2 class="Books">Books</h2>
+				<table>
+					<thead>
+						<tr>
+							<th class="title">Title</th>
+							<th class="opinion">Opinion</th>
+						</tr>
+					</thead>
+				<tbody>						
+					<div class="serached-table">
+						<tr class="box-information">
+							<td><% @books.each do |book| %></td>
+								<td><%= attachment_image_tag book.user, :profile_image, format: 'jpeg', size: "40x40", class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %></td>
+								<td><%= link_to book.title, book_path(book) %></td>
+								<td><%= book.body %></td>	    
+							<% end %>
+						</tr>	
+					</div>
+				</tbody>
+			</table>
+		</div>	
+	<% elsif @model == 'User' %>
+		<div class="Books col-lg-12">
+			<h2 class="Books">Books</h2>
+				<table>
+					<thead>
+						<tr>
+							<th class="title">Name</th>
+							<th class="opinion">Introduction</th>
+						</tr>
+					</thead>
+				<tbody>						
+					<div class="serached-table">
+						<tr>
+							<td><% @users.each do |user| %></td>
+								<td><%= attachment_image_tag user, :profile_image, format: 'jpeg', size: "40x40", class: "img-circle pull-left profile-img", fallback: "no_image.jpg" %></td>
+								<td><%= link_to user.name, user_path(user) %></td>
+								<td><%= user.introduction %></td>	    
+							<% end %>
+						</tr>	
+					</div>
+				</tbody>
+			</table>
+		</div>	
+	<% end %>
+</div>

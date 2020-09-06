@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  get 'searchs/index'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
    devise_for :users
 
@@ -9,6 +10,7 @@ Rails.application.routes.draw do
 resources :books, only: [:create, :index, :show, :edit, :update, :destroy, :update] do
 	resource :favorites, only: [:create, :destroy]
 	resource :post_comments, only: [:create, :destroy]
+	resource :searchs, only: [:index]
 end
 #user用
 resources :users, only: [:show, :edit, :update, :index]
@@ -16,7 +18,10 @@ resources :users, only: [:show, :edit, :update, :index]
 post 'follow/:id' => 'relationships#follow', as: 'follow'
 #フォロー外す用
 post 'unfollow/:id' => 'relationships#unfollow', as: 'unfollow'
-
+#フォロー用ルーティング
 get 'users/:user_id/follower' => 'relationships#follower', as: 'user_follower'
 get 'users/:user_id/followed' => 'relationships#followed', as: 'user_followed'
+
+#検索機能
+
 end
