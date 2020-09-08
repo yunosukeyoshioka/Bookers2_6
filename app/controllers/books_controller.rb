@@ -22,6 +22,7 @@ before_action :correct_user, only: [:edit, :update]
     @book_new = Book.new
     @post_comment = PostComment.new
     @book_comments = @book.post_comments
+    
   end
 
   def edit

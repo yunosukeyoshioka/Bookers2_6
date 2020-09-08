@@ -8,7 +8,7 @@ class User < ApplicationRecord
          attachment :profile_image
          #いいね
          has_many :favorites, dependent: :destroy
-         #投稿
+         #コメント
          has_many :post_comments, dependent: :destroy
          #フォロー取得
          has_many :follower, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
@@ -32,8 +32,7 @@ class User < ApplicationRecord
     following_user.include?(user)
   end 
 
-
-
+  #検索機能
   def self.search(method,search)
     if method == "forward_match"
       User.where("name LIKE ?", "#{search}%")
@@ -45,11 +44,6 @@ class User < ApplicationRecord
       User.where("name LIKE ?", "%#{search}%")  
     end
   end
-
-
-
-
-
 
   #sing up入力画面でIntroduction can't be blankのエラーが
   validates :name, presence: true, length: { in: 2..20 }  

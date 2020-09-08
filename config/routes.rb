@@ -9,7 +9,7 @@ Rails.application.routes.draw do
  #book用 
 resources :books, only: [:create, :index, :show, :edit, :update, :destroy, :update] do
 	resource :favorites, only: [:create, :destroy]
-	resource :post_comments, only: [:create, :destroy]
+	resources :post_comments, only: [:create, :destroy]
 	resource :searchs, only: [:index]
 end
 #user用

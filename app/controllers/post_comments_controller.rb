@@ -3,21 +3,18 @@ class PostCommentsController < ApplicationController
 		@book = Book.find(params[:book_id])
 		@book_comment = current_user.post_comments.new(post_comment_params)
 		@book_comment.book_id = @book.id
-		if @book_comment.save
-			redirect_back(fallback_location: books_path)
-		# else
-		# 	@book_comments = PostComment.where(book_id: @book.id)
-  #  		render '/books/show'
-   	end	
+		@book_comment.save!
+		@comments = PostComment.where(book_id:@book.id) 
 	end
 	
 	def destroy
-		PostComment.find(params[:book_id]).destroy
-		redirect_to book_path(current_user)
+		PostComment.find(params[:id]).destroy
+		@book = Book.find(params[:book_id])
+		@comments = @book.post_comments
 	end	
 
 
-	 private
+	private
   def post_comment_params
     params.require(:post_comment).permit(:comment)
   end
