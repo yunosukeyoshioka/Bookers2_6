@@ -47,5 +47,5 @@ class User < ApplicationRecord
 
   #sing up入力画面でIntroduction can't be blankのエラーが
   validates :name, presence: true, length: { in: 2..20 }  
-  validates :introduction, length: { maximum: 50 } 
+  validates :introduction, presence: true, length: { maximum: 50 } 
 end

@@ -3,7 +3,7 @@ class PostCommentsController < ApplicationController
 		@book = Book.find(params[:book_id])
 		@book_comment = current_user.post_comments.new(post_comment_params)
 		@book_comment.book_id = @book.id
-		@book_comment.save!
+		@book_comment.save
 		@comments = PostComment.where(book_id:@book.id) 
 	end
 	

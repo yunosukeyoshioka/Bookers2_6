@@ -64,7 +64,7 @@
 									<td>
 										<% if @book.user == current_user %>
 											<td class="btn-sm btn-success"><%= link_to "Edit", edit_book_path(@book) %></td>
-											<td class="btn-sm btn-danger"><%= link_to "Destroy", book_path(@book), method: :delete, "data-confirm" => "本当に消しますか？" %></td>									
+											<td class="btn-sm btn-danger"><%= link_to "Destroy", book_path(@book), method: :delete, "data-confirm" => "本当に削除してよろしいですか？" %></td>									
 										<% end %>	
 									</td>
 									<td><%= @book_comments.count %>件のコメント</td>

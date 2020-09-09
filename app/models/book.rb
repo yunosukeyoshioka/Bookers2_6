@@ -9,7 +9,7 @@ class Book < ApplicationRecord
 	def favorited_by?(user)
 		favorites.where(user_id: user.id).exists?
 	end	
-
+	#絞り込み検索
  	def self.search(method,search)
     if method == "forward_match"
     	Book.where("title LIKE ?", "#{search}%")
